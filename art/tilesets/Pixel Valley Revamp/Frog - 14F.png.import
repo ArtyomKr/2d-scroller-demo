@@ -1,0 +1,35 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/Frog - 14F.png-c3237f34c6cc90536f5be8ccd474595e.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://art/tilesets/Pixel Valley Revamp/Frog - 14F.png"
+dest_files=[ "res://.import/Frog - 14F.png-c3237f34c6cc90536f5be8ccd474595e.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+process/normal_map_invert_y=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0
