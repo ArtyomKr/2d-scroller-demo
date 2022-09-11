@@ -8,7 +8,7 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Player.start(Vector2(0, 900))
+	$Player.start($Player.position)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

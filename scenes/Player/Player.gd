@@ -29,7 +29,7 @@ func _physics_process(delta):
 	else: 
 		$AnimatedSprite.play('idle')
 		
-	move_and_slide(velocity)
+	move_and_slide_with_snap(velocity, Vector2.ZERO, Vector2.UP, !is_on_floor(), 4, 1, false)
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
 
