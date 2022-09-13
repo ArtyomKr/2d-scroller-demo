@@ -3,9 +3,11 @@ extends KinematicBody2D
 signal hit
 
 onready var gravity = ProjectSettings.get("physics/2d/default_gravity")
-export var speed = 400
+export var speed = 270
+export var jump_force = 500
 var screen_size
 
+var velocity = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,24 +16,35 @@ func _ready():
 
 
 func _physics_process(delta):
-	var velocity = Vector2.ZERO
-	position.y += delta * gravity
+	var direction = Input.get_action_strength('ui_right') - Input.get_action_strength('ui_left')
+	var movement_speed = direction * speed
 	
-	if Input.is_action_pressed("ui_left"):
-		velocity.x -= 1
-	if Input.is_action_pressed("ui_right"):
-		velocity.x += 1
+	velocity.x = movement_speed * delta * 100
+	velocity.y += delta * gravity
 	
-	if velocity.length() > 0:
-		velocity = velocity.normalized() * speed
-		$AnimatedSprite.play('run')
-		$AnimatedSprite.flip_h = velocity.x < 0
-	else: 
-		$AnimatedSprite.play('idle')
+	if is_on_floor() && Input.is_action_just_pressed('jump'):
+		velocity.y -= jump_force
 		
-	move_and_slide_with_snap(velocity, Vector2.ZERO, Vector2.UP, !is_on_floor(), 4, 1, false)
+	velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
+	
+	
+	if velocity.x != 0 && is_on_floor():
+		$AnimatedSprite.play('run')
+	elif is_on_floor(): 
+		$AnimatedSprite.play('idle')
+		
+	$AnimatedSprite.flip_h = velocity.x < 0
+	
+	if velocity.y > 0:
+		$AnimatedSprite.play('fall')
+	if velocity.y < -400:
+		$AnimatedSprite.play('jump')
+		
+	if Input.is_action_just_pressed("attack"):
+		$AnimatedSprite.play('attack')
+		
 
 
 func _on_Player_body_entered():
