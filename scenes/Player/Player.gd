@@ -9,6 +9,8 @@ var screen_size
 
 var velocity = Vector2.ZERO
 
+var is_attacking = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -29,22 +31,12 @@ func _physics_process(delta):
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
 	
+	if Input.is_action_just_pressed("attack") && !is_attacking:
+		$AttackTimer.start()
+		
+	is_attacking = !$AttackTimer.is_stopped()
 	
-	if velocity.x != 0 && is_on_floor():
-		$AnimatedSprite.play('run')
-	elif is_on_floor(): 
-		$AnimatedSprite.play('idle')
-		
-	$AnimatedSprite.flip_h = velocity.x < 0
-	
-	if velocity.y > 0:
-		$AnimatedSprite.play('fall')
-	if velocity.y < -400:
-		$AnimatedSprite.play('jump')
-		
-	if Input.is_action_just_pressed("attack"):
-		$AnimatedSprite.play('attack')
-		
+	$AnimatedSprite.play(get_animation())
 
 
 func _on_Player_body_entered():
@@ -59,3 +51,28 @@ func start(pos: Vector2):
 	position = pos
 	show()
 	$CollisionShape2D.disabled = false
+	
+	
+func get_animation():
+	var current_animation: String
+	
+	if is_on_floor():
+		if is_attacking:
+			current_animation = 'attack'	
+		elif abs(velocity.x) > 0.1:
+			current_animation = 'run'
+		else: 
+			current_animation = 'idle'
+	else:
+		if velocity.y > 0:
+			current_animation = 'fall'
+		if velocity.y < -400:
+			current_animation = 'jump'
+			
+
+	if abs(velocity.x) > 0.1:
+		$AnimatedSprite.flip_h = velocity.x < 0
+	return current_animation
+
+	
+	

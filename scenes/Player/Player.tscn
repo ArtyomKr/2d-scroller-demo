@@ -41,25 +41,25 @@ animations = [ {
 "name": "die",
 "speed": 3.0
 }, {
-"frames": [ ExtResource( 17 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 18 ), ExtResource( 14 ), ExtResource( 15 ) ],
+"frames": [ ExtResource( 24 ), ExtResource( 26 ), ExtResource( 25 ), ExtResource( 23 ) ],
 "loop": true,
-"name": "run",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 16 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 1 ), ExtResource( 5 ) ],
-"loop": true,
-"name": "attack",
-"speed": 10.0
+"name": "jump",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 28 ), ExtResource( 27 ) ],
 "loop": true,
 "name": "fall",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 24 ), ExtResource( 26 ), ExtResource( 25 ), ExtResource( 23 ) ],
+"frames": [ ExtResource( 16 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 1 ), ExtResource( 5 ) ],
 "loop": true,
-"name": "jump",
-"speed": 5.0
+"name": "attack",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 17 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 18 ), ExtResource( 14 ), ExtResource( 15 ) ],
+"loop": true,
+"name": "run",
+"speed": 8.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
@@ -76,9 +76,15 @@ __meta__ = {
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "fall"
+animation = "idle"
+frame = 2
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 4, 5 )
+position = Vector2( 2.66667, 5 )
 shape = SubResource( 2 )
+
+[node name="AttackTimer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.5
+one_shot = true
