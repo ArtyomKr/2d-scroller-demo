@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Actor",
+"language": "GDScript",
+"path": "res://scenes/actors/Actor.gd"
+} ]
+_global_script_class_icons={
+"Actor": ""
+}
+
 [application]
 
 config/name="2D scroller"
@@ -63,6 +73,17 @@ attack={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":2,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
+
+[layer_names]
+
+2d_render/layer_1="Main"
+2d_render/layer_2="Actors"
+2d_render/layer_3="Walls"
+2d_render/layer_4="Items"
+2d_physics/layer_1="Main"
+2d_physics/layer_2="Actors"
+2d_physics/layer_3="Walls"
+2d_physics/layer_4="Items"
 
 [physics]
 

@@ -1,0 +1,101 @@
+[gd_scene load_steps=32 format=2]
+
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-idle-2-01.png" type="Texture" id=1]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-die-00.png" type="Texture" id=2]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-attack1-01.png" type="Texture" id=3]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-idle-2-03.png" type="Texture" id=4]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-attack1-04.png" type="Texture" id=5]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-attack1-02.png" type="Texture" id=6]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-die-02.png" type="Texture" id=7]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-idle-2-00.png" type="Texture" id=8]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-run-02.png" type="Texture" id=9]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-run-01.png" type="Texture" id=10]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-run-04.png" type="Texture" id=11]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-run-00.png" type="Texture" id=12]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-die-01.png" type="Texture" id=13]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-attack1-00.png" type="Texture" id=14]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-die-03.png" type="Texture" id=15]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-run-03.png" type="Texture" id=16]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-run-05.png" type="Texture" id=17]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-die-06.png" type="Texture" id=18]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-fall-01.png" type="Texture" id=19]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-fall-00.png" type="Texture" id=20]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-jump-00.png" type="Texture" id=21]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-jump-03.png" type="Texture" id=22]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-die-04.png" type="Texture" id=23]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-die-05.png" type="Texture" id=24]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-jump-02.png" type="Texture" id=25]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-jump-01.png" type="Texture" id=26]
+[ext_resource path="res://scenes/actors/player/Player.gd" type="Script" id=27]
+[ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-attack1-03.png" type="Texture" id=28]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 8 ), ExtResource( 1 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "idle",
+"speed": 3.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 13 ), ExtResource( 7 ), ExtResource( 15 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "die",
+"speed": 3.0
+}, {
+"frames": [ ExtResource( 20 ), ExtResource( 19 ) ],
+"loop": true,
+"name": "fall",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 16 ), ExtResource( 11 ), ExtResource( 17 ) ],
+"loop": true,
+"name": "run",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 14 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 28 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "attack",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 21 ), ExtResource( 26 ), ExtResource( 25 ), ExtResource( 22 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 5.0
+height = 16.0
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 16.6667, 16 )
+
+[node name="Player" type="KinematicBody2D"]
+position = Vector2( -1, 0 )
+scale = Vector2( 3, 3 )
+script = ExtResource( 27 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "idle"
+frame = 2
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 2.66667, 5 )
+shape = SubResource( 2 )
+
+[node name="AttackTimer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.5
+one_shot = true
+
+[node name="HitDetector" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitDetector"]
+position = Vector2( 7.33333, -2.66667 )
+shape = SubResource( 3 )

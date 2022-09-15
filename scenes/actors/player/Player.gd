@@ -1,17 +1,14 @@
-extends KinematicBody2D
+extends Actor
 
 signal hit
 
-onready var gravity = ProjectSettings.get("physics/2d/default_gravity")
-export var speed = 270
+export var speed = 300
 export var jump_force = 500
+
 var screen_size
-
-var velocity = Vector2.ZERO
-
 var is_attacking = false
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	screen_size = get_viewport_rect().size
 	hide()
@@ -22,7 +19,6 @@ func _physics_process(delta):
 	var movement_speed = direction * speed
 	
 	velocity.x = movement_speed * delta * 100
-	velocity.y += delta * gravity
 	
 	if is_on_floor() && Input.is_action_just_pressed('jump'):
 		velocity.y -= jump_force
