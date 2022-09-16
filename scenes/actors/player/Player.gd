@@ -28,14 +28,19 @@ func _physics_process(delta):
 	position.y = clamp(position.y, 0, screen_size.y)
 	
 	if Input.is_action_just_pressed("attack") && !is_attacking:
-		$AttackTimer.start()
+		attack()
 		
 	is_attacking = !$AttackTimer.is_stopped()
 	
-	$AnimatedSprite.play(get_animation())
+	play_animation()
 
 
-func _on_Player_body_entered():
+func attack():
+	$AttackTimer.start()
+	$HitDetector/CollisionShape2D2.set_deferred("disabled", !is_attacking)
+
+
+func die():
 	$AnimatedSprite.play('die')
 	if $AnimatedSprite.animation_finished(): 
 		hide()
@@ -49,7 +54,7 @@ func start(pos: Vector2):
 	$CollisionShape2D.disabled = false
 	
 	
-func get_animation():
+func play_animation():
 	var current_animation: String
 	
 	if is_on_floor():
@@ -68,7 +73,10 @@ func get_animation():
 
 	if abs(velocity.x) > 0.1:
 		$AnimatedSprite.flip_h = velocity.x < 0
-	return current_animation
+	$AnimatedSprite.play(current_animation)
 
-	
-	
+
+func _on_HitDetector_body_entered(body):
+	if body is Enemy:
+		body.destroy()
+		
