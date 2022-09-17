@@ -27,17 +27,9 @@ func _physics_process(delta):
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
 	
-	if Input.is_action_just_pressed("attack") && !is_attacking:
-		attack()
-		
-	is_attacking = !$AttackTimer.is_stopped()
+	monitor_attack_input()
 	
 	play_animation()
-
-
-func attack():
-	$AttackTimer.start()
-	$HitDetector/CollisionShape2D2.set_deferred("disabled", !is_attacking)
 
 
 func die():
@@ -76,7 +68,18 @@ func play_animation():
 	$AnimatedSprite.play(current_animation)
 
 
+func monitor_attack_input():
+	is_attacking = !$AttackTimer.is_stopped()
+	$HitDetector/CollisionShape2D2.set_deferred("disabled", !is_attacking)
+	
+	if Input.is_action_just_pressed("attack"):
+		if !is_attacking:
+			$AttackTimer.start()
+
+
 func _on_HitDetector_body_entered(body):
+	print('hit')
 	if body is Enemy:
 		body.destroy()
+		print('hit')
 		

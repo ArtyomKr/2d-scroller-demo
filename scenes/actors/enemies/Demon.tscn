@@ -107,14 +107,20 @@ animations = [ {
 height = 24.0
 
 [node name="Demon" type="KinematicBody2D"]
+collision_layer = 4
 script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 1.5, 1.5 )
 frames = SubResource( 17 )
 animation = "idle"
-frame = 1
+frame = 4
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 11 )
+position = Vector2( -3, 16 )
+scale = Vector2( 1.5, 1.5 )
 shape = SubResource( 18 )

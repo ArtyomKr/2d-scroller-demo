@@ -12,7 +12,7 @@ func _ready():
 
 
 func _physics_process(delta):
-	pass
+	velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
 
 
 func start(pos: Vector2):

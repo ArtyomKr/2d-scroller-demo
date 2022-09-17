@@ -82,13 +82,13 @@ attack={
 
 [layer_names]
 
-2d_render/layer_1="Main"
-2d_render/layer_2="Actors"
-2d_render/layer_3="Walls"
+2d_render/layer_1="Walls"
+2d_render/layer_2="Player"
+2d_render/layer_3="Actors"
 2d_render/layer_4="Items"
-2d_physics/layer_1="Main"
-2d_physics/layer_2="Actors"
-2d_physics/layer_3="Walls"
+2d_physics/layer_1="Walls"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="Actors"
 2d_physics/layer_4="Items"
 
 [physics]
