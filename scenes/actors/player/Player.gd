@@ -78,8 +78,6 @@ func monitor_attack_input():
 
 
 func _on_HitDetector_body_entered(body):
-	print('hit')
 	if body is Enemy:
-		body.destroy()
-		print('hit')
+		body.damage(3)
 		

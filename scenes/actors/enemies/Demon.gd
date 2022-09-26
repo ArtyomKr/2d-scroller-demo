@@ -7,6 +7,10 @@ export var jump_force = 500
 var is_attacking = false
 
 
+func _init():
+	hp = 10
+
+
 func _ready():
 	hide()
 
@@ -19,7 +23,6 @@ func start(pos: Vector2):
 	position = pos
 	show()
 	$CollisionShape2D.disabled = false
-
 	
 	
 func get_animation():
@@ -37,7 +40,6 @@ func get_animation():
 			current_animation = 'fall'
 		if velocity.y < -400:
 			current_animation = 'jump'
-			
 
 	if abs(velocity.x) > 0.1:
 		$AnimatedSprite.flip_h = velocity.x < 0
