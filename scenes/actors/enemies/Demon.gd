@@ -15,7 +15,7 @@ func _ready():
 	hide()
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
 
 
@@ -43,5 +43,6 @@ func get_animation():
 
 	if abs(velocity.x) > 0.1:
 		$AnimatedSprite.flip_h = velocity.x < 0
+		
 	$AnimatedSprite.play(current_animation)
 

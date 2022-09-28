@@ -65,6 +65,7 @@ func play_animation():
 
 	if abs(velocity.x) > 0.1:
 		$AnimatedSprite.flip_h = velocity.x < 0
+		
 	$AnimatedSprite.play(current_animation)
 
 

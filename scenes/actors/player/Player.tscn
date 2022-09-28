@@ -36,11 +36,6 @@ animations = [ {
 "name": "idle",
 "speed": 3.0
 }, {
-"frames": [ ExtResource( 2 ), ExtResource( 13 ), ExtResource( 7 ), ExtResource( 15 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 18 ) ],
-"loop": true,
-"name": "die",
-"speed": 3.0
-}, {
 "frames": [ ExtResource( 14 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 28 ), ExtResource( 5 ) ],
 "loop": true,
 "name": "attack",
@@ -60,6 +55,11 @@ animations = [ {
 "loop": true,
 "name": "jump",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 13 ), ExtResource( 7 ), ExtResource( 15 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "die",
+"speed": 3.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
@@ -82,7 +82,6 @@ __meta__ = {
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 2
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
