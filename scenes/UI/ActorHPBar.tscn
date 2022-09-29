@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=2]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray(  )
+colors = PoolColorArray(  )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+width = 45
+
+[sub_resource type="Gradient" id=3]
+colors = PoolColorArray( 0.30127, 0.30127, 0.30127, 1, 0.613261, 0.613261, 0.613261, 1 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+width = 50
+
+[sub_resource type="Gradient" id=5]
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 0.588235, 0.0941176, 0.0941176, 1 )
+
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
+width = 50
+
+[node name="TextureRect" type="TextureRect"]
+margin_right = 50.0
+margin_bottom = 16.0
+texture = SubResource( 2 )
+expand = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_right = 50.0
+margin_bottom = 16.0
+
+[node name="TextureProgress" type="TextureProgress" parent="MarginContainer"]
+margin_right = 50.0
+margin_bottom = 16.0
+grow_vertical = 0
+value = 10.0
+texture_under = SubResource( 4 )
+texture_progress = SubResource( 6 )
+fill_mode = 1
