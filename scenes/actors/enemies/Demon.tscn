@@ -1,9 +1,10 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://art/animations/gothicvania patreon collection/Hell-Beast-Files/PNG/without-stroke/hell-beast-breath.png" type="Texture" id=1]
 [ext_resource path="res://art/animations/gothicvania patreon collection/Hell-Beast-Files/PNG/without-stroke/hell-beast-burn.png" type="Texture" id=2]
 [ext_resource path="res://art/animations/gothicvania patreon collection/Hell-Beast-Files/PNG/without-stroke/hell-beast-idle.png" type="Texture" id=3]
 [ext_resource path="res://scenes/actors/enemies/Demon.gd" type="Script" id=4]
+[ext_resource path="res://scenes/UI/ActorHPBar.tscn" type="PackedScene" id=5]
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
@@ -107,6 +108,7 @@ animations = [ {
 height = 24.0
 
 [node name="Demon" type="KinematicBody2D"]
+position = Vector2( 0, -5 )
 collision_layer = 4
 script = ExtResource( 4 )
 __meta__ = {
@@ -117,10 +119,16 @@ __meta__ = {
 scale = Vector2( 1.5, 1.5 )
 frames = SubResource( 17 )
 animation = "idle"
-frame = 2
+frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -3, 16 )
 scale = Vector2( 1.5, 1.5 )
 shape = SubResource( 18 )
+
+[node name="HPBar" parent="." instance=ExtResource( 5 )]
+margin_left = -24.0
+margin_top = -50.0
+margin_right = 26.0
+margin_bottom = -42.0

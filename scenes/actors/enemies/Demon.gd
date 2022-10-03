@@ -1,5 +1,6 @@
 extends Enemy
 
+
 signal hit
 export var speed = 300
 export var jump_force = 500
