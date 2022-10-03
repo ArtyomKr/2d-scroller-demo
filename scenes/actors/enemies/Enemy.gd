@@ -10,10 +10,10 @@ func destroy():
 func damage(amount):
 	hp -= amount
 	
+	yield(flash_color(), "completed")
+	
 	if hp <= 0:
 		destroy()
-		
-	flash_color()
 
 
 func flash_color():
@@ -21,7 +21,7 @@ func flash_color():
 	flash_timer.one_shot = true
 	add_child(flash_timer)
 	
-	$AnimatedSprite.self_modulate = Color(2047, 0, 0, 255)
+	$AnimatedSprite.self_modulate = Color(1000, 1000, 1000)
 	
 	flash_timer.start(0.3)
 	yield(flash_timer, "timeout")
