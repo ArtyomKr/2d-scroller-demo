@@ -2,6 +2,11 @@ class_name Enemy
 extends Actor
 
 
+func _ready():
+	if has_node("HPBar"):
+		$HPBar.max_value = hp
+	
+
 func destroy():
 	velocity = Vector2.ZERO
 	queue_free()
@@ -9,6 +14,9 @@ func destroy():
 
 func damage(amount):
 	hp -= amount
+	
+	if has_node("HPBar"):
+		$HPBar.value = hp
 	
 	yield(flash_color(), "completed")
 	
