@@ -16,6 +16,7 @@ func damage(amount):
 	hp -= amount
 	
 	if has_node("HPBar"):
+		$HPBar.show()
 		$HPBar.value = hp
 	
 	yield(flash_color(), "completed")

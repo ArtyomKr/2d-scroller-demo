@@ -27,6 +27,7 @@ gradient = SubResource( 5 )
 width = 50
 
 [node name="HPBar" type="TextureRect"]
+visible = false
 margin_right = 50.0
 margin_bottom = 4.0
 texture = SubResource( 2 )
@@ -41,7 +42,7 @@ margin_bottom = 4.0
 margin_right = 50.0
 margin_bottom = 4.0
 grow_vertical = 0
-value = 70.0
+value = 100.0
 texture_under = SubResource( 4 )
 texture_progress = SubResource( 6 )
 nine_patch_stretch = true
