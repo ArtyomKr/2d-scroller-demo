@@ -26,7 +26,7 @@
 [ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-die-05.png" type="Texture" id=24]
 [ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-jump-02.png" type="Texture" id=25]
 [ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-jump-01.png" type="Texture" id=26]
-[ext_resource path="res://scenes/actors/player/Player.gd" type="Script" id=27]
+[ext_resource path="res://scenes/Actors/player/Player.gd" type="Script" id=27]
 [ext_resource path="res://art/animations/adventurer/Individual Sprites/adventurer-attack1-03.png" type="Texture" id=28]
 
 [sub_resource type="SpriteFrames" id=1]
