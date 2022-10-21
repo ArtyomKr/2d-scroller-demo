@@ -36,6 +36,5 @@ func flash_color():
 	yield(flash_timer, "timeout")
 	flash_timer.queue_free()
 	
-	if $AnimatedSprite:
-		$AnimatedSprite.self_modulate = Color(1, 1, 1)
+	$AnimatedSprite.self_modulate = Color(1, 1, 1)
 

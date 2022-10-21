@@ -1,12 +1,12 @@
 extends Enemy
 
 
-signal hit
+signal detected_player
 export var speed = 300
 export var jump_force = 500
 
 var is_attacking = false
-
+const FireBall = preload("res://scenes/Objects/FireBall.tscn")
 
 func _init():
 	hp = 10
@@ -47,3 +47,19 @@ func get_animation():
 		
 	$AnimatedSprite.play(current_animation)
 
+
+func _on_DetectionArea_body_entered(body):
+	if body is Player:
+		emit_signal("detected_player")
+		attack(body)
+
+
+func attack(target: Node):
+	var fireball = FireBall.instance()
+	var target_direction = target.global_position.direction_to(global_position)
+	
+	fireball.global_position = global_position
+	fireball.linear_velocity = Vector2(-target_direction.round().x * 300, 0)
+	fireball.set_as_toplevel(true)
+	
+	call_deferred("add_child", fireball)
