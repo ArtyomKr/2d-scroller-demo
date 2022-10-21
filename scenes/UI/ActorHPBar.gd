@@ -10,5 +10,4 @@ func set_value(hp):
 	
 	
 func set_max_value(max_hp):
-	print(max_hp)
 	$MarginContainer/TextureProgress.max_value = max_hp
