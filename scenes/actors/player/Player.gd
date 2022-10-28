@@ -9,7 +9,7 @@ export var jump_force = 500
 
 var screen_size
 var is_attacking = false
-
+var is_hit = false
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -34,20 +34,27 @@ func _physics_process(delta):
 	play_animation()
 
 
+func start(pos: Vector2):
+	position = pos
+	show()
+	$CollisionShape2D.disabled = false
+
+
 func die():
 	$AnimatedSprite.play('die')
 	if $AnimatedSprite.animation_finished(): 
 		hide()
 		emit_signal('hit')
 		$CollisionShape2D.set_deferred('disabled', true)
-		
-		
-func start(pos: Vector2):
-	position = pos
-	show()
-	$CollisionShape2D.disabled = false
-	
-	
+
+
+func damage():
+	is_hit = true
+	$AnimatedSprite.play("hurt")
+	print('hit')
+	emit_signal('hit')
+
+
 func play_animation():
 	var current_animation: String
 	
@@ -63,12 +70,12 @@ func play_animation():
 			current_animation = 'fall'
 		if velocity.y < -400:
 			current_animation = 'jump'
-			
 
 	if abs(velocity.x) > 0.1:
 		$AnimatedSprite.flip_h = velocity.x < 0
-		
-	$AnimatedSprite.play(current_animation)
+	
+	if current_animation != $AnimatedSprite.animation:	
+		$AnimatedSprite.play(current_animation)
 
 
 func monitor_attack_input():

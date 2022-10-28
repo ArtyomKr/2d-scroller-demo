@@ -57,7 +57,7 @@ func _on_DetectionArea_body_entered(body):
 func attack(target: Node):
 	var fireball = FireBall.instance()
 	var target_direction = target.global_position.direction_to(global_position)
-	
+	$AnimatedSprite.flip_h = target_direction.x < 0
 	fireball.global_position = global_position
 	fireball.linear_velocity = Vector2(-target_direction.round().x * 300, 0)
 	fireball.set_as_toplevel(true)

@@ -108,7 +108,7 @@ animations = [ {
 height = 24.0
 
 [sub_resource type="CircleShape2D" id=19]
-radius = 384.012
+radius = 320.039
 
 [node name="Demon" type="KinematicBody2D"]
 position = Vector2( 0, -5 )
@@ -122,7 +122,6 @@ __meta__ = {
 scale = Vector2( 1.5, 1.5 )
 frames = SubResource( 17 )
 animation = "idle"
-frame = 4
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

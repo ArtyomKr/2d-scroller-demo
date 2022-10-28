@@ -30,14 +30,17 @@ animations = [ {
 radius = 4.0
 
 [node name="FireBall" type="RigidBody2D"]
-collision_layer = 2
+collision_layer = 16
+collision_mask = 3
 gravity_scale = 0.0
+continuous_cd = 2
+contacts_reported = 1
+contact_monitor = true
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 3, 0 )
 frames = SubResource( 4 )
-frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
