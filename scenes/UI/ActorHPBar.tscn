@@ -27,7 +27,6 @@ gradient = SubResource( 5 )
 width = 50
 
 [node name="HPBar" type="TextureRect"]
-visible = false
 margin_right = 50.0
 margin_bottom = 4.0
 texture = SubResource( 2 )

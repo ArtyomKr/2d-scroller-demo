@@ -8,6 +8,8 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$CanvasLayer/PlayerHPBar.max_value = $Player.hp
+	$CanvasLayer/PlayerHPBar.value = $Player.hp
 	$Player.start($Player.position)
 	$Demon.start($Demon.position)
 
