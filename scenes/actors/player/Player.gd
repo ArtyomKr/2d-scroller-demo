@@ -3,6 +3,7 @@ extends Actor
 
 
 signal hit(hp)
+signal player_died
 
 
 export var speed = 300
@@ -45,7 +46,6 @@ func _physics_process(delta):
 	monitor_attack_input()
 	manage_state()
 	play_animation()
-	
 
 
 func start(pos: Vector2):
@@ -55,10 +55,17 @@ func start(pos: Vector2):
 
 
 func die():
+	_state = STATE.DEAD
+	$CollisionShape2D.set_deferred('disabled', true)
+	get_tree().paused = true
+	
+	$AnimatedSprite.pause_mode = Node.PAUSE_MODE_PROCESS
 	$AnimatedSprite.play('die')
-	if $AnimatedSprite.animation_finished(): 
-		hide()
-		$CollisionShape2D.set_deferred('disabled', true)
+	yield($AnimatedSprite, "animation_finished")
+	$AnimatedSprite.stop()
+	
+	hide()
+	emit_signal('player_died')
 
 
 func damage():
@@ -118,7 +125,7 @@ func manage_state():
 		_state = STATE.IS_HIT
 
 
+
 func _on_HitDetector_body_entered(body):
 	if body is Enemy:
 		body.damage(3)
-		
