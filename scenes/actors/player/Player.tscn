@@ -88,7 +88,6 @@ tracks/5/keys = {
 [sub_resource type="Animation" id=13]
 resource_name = "attack_0"
 length = 1.2
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -388,7 +387,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 2.66667, 0.666667 ) ]
+"values": [ Vector2( 2.667, 3.333 ) ]
 }
 
 [sub_resource type="Animation" id=17]
@@ -583,10 +582,10 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.3, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ Vector2( 1.33333, 5.66667 ), Vector2( 1.33333, 6.66667 ), Vector2( 3, 0 ) ]
+"values": [ Vector2( 1.333, 3.333 ), Vector2( 1.66667, 1.66667 ) ]
 }
 
 [sub_resource type="Animation" id=10]
@@ -783,6 +782,7 @@ __meta__ = {
 [node name="HitBox" type="CollisionShape2D" parent="."]
 position = Vector2( 1.33333, 5.66667 )
 shape = SubResource( 2 )
+disabled = true
 
 [node name="HitDetector" type="Area2D" parent="."]
 collision_layer = 2

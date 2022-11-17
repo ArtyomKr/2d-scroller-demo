@@ -59,7 +59,7 @@ func die():
 
 
 func damage():
-	if $HitTaimer.is_stopped():
+	if $HitTaimer .is_stopped():
 		$HitTimer.start()
 		hp -= 1
 		emit_signal('hit', hp)
@@ -67,61 +67,28 @@ func damage():
 			die()
 
 
-func play_animation():
-	var current_animation: String
-	
-	if is_on_floor():
-		if abs(velocity.x) > 0.1:
-			current_animation = 'run'
-		else: 
-			current_animation = 'idle'
-	else:
-		if velocity.y > 0:
-			current_animation = 'fall'
-		if velocity.y < -400:
-			current_animation = 'jump'
-
-	if _state == STATE.HURT:
-		current_animation = 'hurt'
-	
-	if _state == STATE.ATTACKING:
-			current_animation = 'attack'
-
-	if abs(velocity.x) > 0.1:
-		$AnimationPlayer.flip_h = velocity.x < 0
-	
-	if current_animation != $AnimationPlayer.animation:	
-		$AnimationPlayer.play(current_animation)
-
-
-func monitor_attack_input():
-	$HitDetector/CollisionShape2D2.set_deferred("disabled", _state != STATE.ATTACKING)
-	
-	if Input.is_action_just_pressed("attack"):
-		if _state != STATE.ATTACKING:
-			$AttackTimer.start()
-
-
 func manage_state(delta):
 	var current_animation: String
 	var direction = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	var movement_speed = direction * speed
-		
+	velocity.x = movement_speed * delta * 100
 	
 	match _state:
 		STATE.BLOCKED:
 			pass
 		STATE.IDLE:
-			if (is_on_floor() && abs(direction) > 0):
+			if is_on_floor() && abs(direction) > 0:
 				_state = STATE.WALKING
 			if Input.is_action_just_pressed("attack"):
 				_state = STATE.ATTACKING
 			if !is_on_floor():
 				_state = STATE.IN_AIR
+			if is_on_floor() && Input.is_action_just_pressed("jump"):
+				velocity.y -= jump_force
+				_state = STATE.IN_AIR
 			current_animation = "idle_0"
 			pass
 		STATE.WALKING:
-			velocity.x = movement_speed * delta * 100	
 			velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
 			current_animation = "run"
 			
@@ -134,13 +101,21 @@ func manage_state(delta):
 				_state = STATE.IDLE
 			pass
 		STATE.IN_AIR:
-			velocity.x = movement_speed * delta * 100
 			velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
 			
-			if is_on_floor():
+			if is_on_floor(): 
 				_state = STATE.IDLE
-			current_animation = "jump"
+			if is_on_floor() && abs(velocity.x) > 0:
+				_state = STATE.WALKING
+				
+			if velocity.y > 0:
+				current_animation = "fall"
+			else:
+				current_animation = "jump"
 			pass
+		STATE.ATTACKING:
+			velocity.x = 0
+			current_animation = "attack_0"
 	
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)

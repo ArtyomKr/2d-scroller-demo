@@ -9,12 +9,12 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Reference",
+"base": "KinematicBody2D",
 "class": "Actor",
 "language": "GDScript",
 "path": "res://scenes/Actors/Actor.gd"
 }, {
-"base": "Reference",
+"base": "Actor",
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://scenes/Actors/enemies/Enemy.gd"
