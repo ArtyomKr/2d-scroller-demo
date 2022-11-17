@@ -35,7 +35,7 @@ func _ready():
 
 func _physics_process(delta):
 	manage_state(delta)
-	print_debug(_state)
+	print_debug(is_on_floor())
 
 
 func start(pos: Vector2):
@@ -46,25 +46,22 @@ func start(pos: Vector2):
 
 func die():
 	_state = STATE.DEAD
-	$HitBox.set_deferred('disabled', true)
 	get_tree().paused = true
 	
 	$AnimationPlayer.pause_mode = Node.PAUSE_MODE_PROCESS
 	$AnimationPlayer.play('die')
 	yield($AnimationPlayer, "animation_finished")
-	$AnimationPlayer.stop()
 	
 	hide()
 	emit_signal('player_died')
 
 
 func damage():
-	if $HitTaimer .is_stopped():
-		$HitTimer.start()
-		hp -= 1
-		emit_signal('hit', hp)
-		if hp <= 0:
-			die()
+	hp -= 1
+	emit_signal('hit', hp)
+	_state = STATE.HURT
+	if hp <= 0:
+		die()
 
 
 func manage_state(delta):
@@ -77,6 +74,8 @@ func manage_state(delta):
 		STATE.BLOCKED:
 			pass
 		STATE.IDLE:
+			velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
+			
 			if is_on_floor() && abs(direction) > 0:
 				_state = STATE.WALKING
 			if Input.is_action_just_pressed("attack"):
@@ -116,6 +115,8 @@ func manage_state(delta):
 		STATE.ATTACKING:
 			velocity.x = 0
 			current_animation = "attack_0"
+		STATE.HURT:
+			current_animation = "hurt"
 	
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
