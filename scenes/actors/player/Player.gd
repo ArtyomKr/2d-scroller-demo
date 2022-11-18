@@ -46,14 +46,6 @@ func start(pos: Vector2):
 
 func die():
 	_state = STATE.DEAD
-	get_tree().paused = true
-	
-	$AnimationPlayer.pause_mode = Node.PAUSE_MODE_PROCESS
-	$AnimationPlayer.play('die')
-	yield($AnimationPlayer, "animation_finished")
-	
-	hide()
-	emit_signal('player_died')
 
 
 func damage():
@@ -117,6 +109,13 @@ func manage_state(delta):
 			current_animation = "attack_0"
 		STATE.HURT:
 			current_animation = "hurt"
+		STATE.DEAD:
+			get_tree().paused = true
+			$AnimationPlayer.pause_mode = Node.PAUSE_MODE_PROCESS
+			$AnimationPlayer.play('die')
+			yield($AnimationPlayer, "animation_finished")
+			hide()
+			emit_signal('player_died')
 	
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
