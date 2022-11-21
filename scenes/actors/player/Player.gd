@@ -35,13 +35,12 @@ func _ready():
 
 func _physics_process(delta):
 	manage_state(delta)
-	print_debug(is_on_floor())
 
 
 func start(pos: Vector2):
 	position = pos
 	show()
-	$HitBox.disabled = false
+	$PhysicsBox.disabled = false
 
 
 func die():
@@ -112,7 +111,7 @@ func manage_state(delta):
 		STATE.DEAD:
 			get_tree().paused = true
 			$AnimationPlayer.pause_mode = Node.PAUSE_MODE_PROCESS
-			$AnimationPlayer.play('die')
+			$AnimationPlayer.play("die")
 			yield($AnimationPlayer, "animation_finished")
 			hide()
 			emit_signal('player_died')
@@ -122,6 +121,9 @@ func manage_state(delta):
 				
 	if abs(velocity.x) > 0.1:
 		$Sprite.flip_h = velocity.x < 0
+		if direction != 0:
+			$HitBoxArea.scale.x = direction
+			$PlayerAttackArea.scale.x = direction
 	
 	if current_animation != $AnimationPlayer.assigned_animation:	
 		$AnimationPlayer.play(current_animation)
@@ -129,6 +131,7 @@ func manage_state(delta):
 func goto_idle():
 	_state = STATE.IDLE
 
-func _on_HitDetector_body_entered(body):
-	if body is Enemy:
+
+func _on_PlayerAttackArea_body_entered(body):
+	if body.is_in_group("enemy"):
 		body.damage(3)

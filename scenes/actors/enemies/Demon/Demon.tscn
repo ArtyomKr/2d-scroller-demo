@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://scenes/UI/ActorHPBar.tscn" type="PackedScene" id=1]
 [ext_resource path="res://art/animations/gothicvania patreon collection/Hell-Beast-Files/PNG/without-stroke/hell-beast-idle.png" type="Texture" id=2]
@@ -36,26 +36,6 @@ flags = 4
 atlas = ExtResource( 2 )
 region = Rect2( 275, 0, 55, 67 )
 
-[sub_resource type="AtlasTexture" id=7]
-flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=8]
-flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 64, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=9]
-flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 128, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=10]
-flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 192, 0, 64, 64 )
-
 [sub_resource type="AtlasTexture" id=11]
 flags = 4
 atlas = ExtResource( 4 )
@@ -86,6 +66,26 @@ flags = 4
 atlas = ExtResource( 4 )
 region = Rect2( 370, 0, 74, 160 )
 
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 64, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 128, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 192, 0, 64, 64 )
+
 [sub_resource type="SpriteFrames" id=17]
 animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
@@ -93,24 +93,27 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
-"loop": true,
-"name": "breath",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
 "loop": true,
 "name": "burn",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
+"loop": true,
+"name": "breath",
+"speed": 5.0
 } ]
 
-[sub_resource type="CapsuleShape2D" id=18]
-height = 24.0
+[sub_resource type="CircleShape2D" id=20]
 
 [sub_resource type="CircleShape2D" id=19]
 radius = 320.039
 
-[node name="Demon" type="KinematicBody2D"]
+[sub_resource type="CapsuleShape2D" id=18]
+radius = 11.3333
+height = 22.6667
+
+[node name="Demon" type="KinematicBody2D" groups=["demon", "enemy"]]
 position = Vector2( 0, -5 )
 collision_layer = 4
 script = ExtResource( 5 )
@@ -124,10 +127,10 @@ frames = SubResource( 17 )
 animation = "idle"
 playing = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -3, 16 )
+[node name="PhysicsBox" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 36 )
 scale = Vector2( 1.5, 1.5 )
-shape = SubResource( 18 )
+shape = SubResource( 20 )
 
 [node name="HPBar" parent="." instance=ExtResource( 1 )]
 anchor_left = 0.5
@@ -143,5 +146,10 @@ collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource( 19 )
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 17 )
+scale = Vector2( 1.5, 1.5 )
+shape = SubResource( 18 )
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]

@@ -23,7 +23,7 @@ func _physics_process(_delta):
 func start(pos: Vector2):
 	position = pos
 	show()
-	$CollisionShape2D.disabled = false
+	$PhysicsBox.disabled = false
 	
 	
 func get_animation():
@@ -65,3 +65,7 @@ func attack(target: Node):
 	fireball.set_as_toplevel(true)
 	
 	call_deferred("add_child", fireball)
+
+
+func _on_HurtBox_area_entered(area):
+	pass # Replace with function body.
