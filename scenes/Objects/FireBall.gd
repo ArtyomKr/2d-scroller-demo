@@ -5,6 +5,7 @@ func _physics_process(delta):
 	$AnimatedSprite.flip_h = linear_velocity.x > 0
 
 
-func _on_FireBall_body_entered(body):
-	if body is Player:
-		body.damage()
+func _on_HitBoxArea_area_entered(area):
+	if area.get_parent().is_in_group("player"):
+		area.get_parent().damage()
+	queue_free()

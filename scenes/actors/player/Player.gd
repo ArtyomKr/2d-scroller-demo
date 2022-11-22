@@ -132,6 +132,6 @@ func goto_idle():
 	_state = STATE.IDLE
 
 
-func _on_PlayerAttackArea_body_entered(body):
-	if body.is_in_group("enemy"):
-		body.damage(3)
+func _on_PlayerAttackArea_area_entered(area):
+	if area.is_in_group("enemy_hitbox"):
+		area.get_parent().damage(3)

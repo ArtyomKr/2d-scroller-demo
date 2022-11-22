@@ -856,9 +856,11 @@ vframes = 11
 frame = 1
 
 [node name="HitBoxArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 9
 
 [node name="HitBox" type="CollisionShape2D" parent="HitBoxArea"]
 position = Vector2( 1.33333, 5.66667 )
 shape = SubResource( 2 )
 
-[connection signal="body_entered" from="PlayerAttackArea" to="." method="_on_PlayerAttackArea_body_entered"]
+[connection signal="area_entered" from="PlayerAttackArea" to="." method="_on_PlayerAttackArea_area_entered"]
