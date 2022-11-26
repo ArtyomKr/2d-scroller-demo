@@ -17,7 +17,6 @@ enum STATE {
 	HURT
 }
 
-var is_attacking = false
 var target
 var _state = STATE.IDLE
 const FireBall = preload("res://scenes/Objects/FireBall.tscn")
@@ -32,52 +31,45 @@ func _ready():
 
 
 func _physics_process(_delta):
-	velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
+	manage_state()
+	print(_state)
+	print(target)
 
 
 func start(pos: Vector2):
 	position = pos
 	show()
 	$PhysicsBox.disabled = false
-	
-	
-func get_animation():
-	var current_animation: String
-	
-	if is_on_floor():
-		if is_attacking:
-			current_animation = 'breath'	
-		elif abs(velocity.x) > 0.1:
-			current_animation = 'run'
-		else: 
-			current_animation = 'idle'
-	else:
-		if velocity.y > 0:
-			current_animation = 'fall'
-		if velocity.y < -400:
-			current_animation = 'jump'
-
-	if abs(velocity.x) > 0.1:
-		$AnimatedSprite.flip_h = velocity.x < 0
-		
-	$AnimatedSprite.play(current_animation)
 
 
-func manage_state(delta):
+func die():
+	_state = STATE.DEAD
+
+
+func damage(amount):
+	_state = STATE.HURT
+	.damage(amount)
+
+
+func manage_state():
 	var current_animation: String
 	
 	match _state:
 		STATE.IDLE:
 			velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
-
+			
 			current_animation = "idle"
 			pass
 		STATE.ALERTED:
 			velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
 			
 			if target:
+				var target_direction = target.global_position.direction_to(global_position)
+				$AnimatedSprite.flip_h = target_direction.x < 0
 				_state = STATE.ATTACKING
-				
+			elif $AlertTimer.is_stopped():
+				_state = STATE.IDLE
+			
 			current_animation = "idle"
 			pass
 		STATE.TELEPORTING:
@@ -95,8 +87,6 @@ func manage_state(delta):
 
 			pass
 		STATE.ATTACKING:
-			velocity.x = 0
-			
 			if target:
 				attack(target)
 			else:
@@ -106,25 +96,16 @@ func manage_state(delta):
 		STATE.HURT:
 			current_animation = "hurt"
 		STATE.DEAD:
-			get_tree().paused = true
-			$AnimationPlayer.pause_mode = Node.PAUSE_MODE_PROCESS
 			$AnimationPlayer.play("die")
 			yield($AnimationPlayer, "animation_finished")
-			hide()
+			destroy()
 	
 	if current_animation != $AnimationPlayer.assigned_animation:	
 		$AnimationPlayer.play(current_animation)
 
 
-func goto_idle():
-	_state = STATE.IDLE
-
-
-func _on_DetectionArea_body_entered(body):
-	if body is Player:
-		emit_signal("detected_player")
-		target = body
-		attack(target)
+func goto_alert():
+	_state = STATE.ALERTED
 
 
 func attack(target: Node):
@@ -138,3 +119,17 @@ func attack(target: Node):
 	fireball.set_as_toplevel(true)
 	
 	call_deferred("add_child", fireball)
+	
+
+func _on_DetectionArea_body_entered(body):
+	if body is Player:
+		emit_signal("detected_player")
+		target = body
+		_state = STATE.ALERTED
+		$AlertTimer.stop()
+
+
+func _on_DetectionArea_body_exited(body):
+	if body is Player:
+		target = null
+		$AlertTimer.start()

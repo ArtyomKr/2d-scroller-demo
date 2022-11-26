@@ -21,5 +21,3 @@ position = Vector2( 509, 373 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PlayerHPBar" parent="CanvasLayer" instance=ExtResource( 5 )]
-
-[connection signal="hit" from="Player" to="CanvasLayer/PlayerHPBar" method="_on_Player_hit"]

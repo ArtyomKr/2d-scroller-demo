@@ -12,17 +12,17 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Actor",
 "language": "GDScript",
-"path": "res://scenes/actors/Actor.gd"
+"path": "res://scenes/Actors/Actor.gd"
 }, {
 "base": "Reference",
 "class": "Enemy",
 "language": "GDScript",
-"path": "res://scenes/actors/enemies/Enemy.gd"
+"path": "res://scenes/Actors/enemies/Enemy.gd"
 }, {
 "base": "Reference",
 "class": "Player",
 "language": "GDScript",
-"path": "res://scenes/actors/player/Player.gd"
+"path": "res://scenes/Actors/player/Player.gd"
 } ]
 _global_script_class_icons={
 "Actor": "",
