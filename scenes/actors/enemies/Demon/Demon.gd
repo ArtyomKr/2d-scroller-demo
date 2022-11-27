@@ -32,8 +32,7 @@ func _ready():
 
 func _physics_process(_delta):
 	manage_state()
-	print(_state)
-	print(target)
+	print($AttackTimer.is_stopped())
 
 
 func start(pos: Vector2):
@@ -66,6 +65,7 @@ func manage_state():
 			if target:
 				var target_direction = target.global_position.direction_to(global_position)
 				$AnimatedSprite.flip_h = target_direction.x < 0
+				
 				_state = STATE.ATTACKING
 			elif $AlertTimer.is_stopped():
 				_state = STATE.IDLE
@@ -87,18 +87,20 @@ func manage_state():
 
 			pass
 		STATE.ATTACKING:
-			if target:
+			if $AttackTimer.is_stopped():
+				$AnimationPlayer.play("attack")
+				yield($AnimationPlayer, "animation_finished")
 				attack(target)
-			else:
-				 _state = STATE.ALERTED
-				
-			current_animation = "attack"
+				$AttackTimer.start(rand_range(0.5, 3.0))
+			pass
 		STATE.HURT:
 			current_animation = "hurt"
+			pass
 		STATE.DEAD:
 			$AnimationPlayer.play("die")
 			yield($AnimationPlayer, "animation_finished")
 			destroy()
+			pass
 	
 	if current_animation != $AnimationPlayer.assigned_animation:	
 		$AnimationPlayer.play(current_animation)
@@ -108,16 +110,17 @@ func goto_alert():
 	_state = STATE.ALERTED
 
 
+#TODO: rewrite attack function
 func attack(target: Node):
 	var fireball = FireBall.instance()
 	var target_direction = target.global_position.direction_to(global_position)
-	
+		
 	$AnimatedSprite.flip_h = target_direction.x < 0
-	
+		
 	fireball.global_position = global_position
 	fireball.linear_velocity = Vector2(-target_direction.round().x * 300, 0)
 	fireball.set_as_toplevel(true)
-	
+		
 	call_deferred("add_child", fireball)
 	
 
