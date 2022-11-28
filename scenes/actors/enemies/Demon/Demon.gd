@@ -32,7 +32,6 @@ func _ready():
 
 func _physics_process(_delta):
 	manage_state()
-	print($AttackTimer.is_stopped())
 
 
 func start(pos: Vector2):
@@ -66,7 +65,8 @@ func manage_state():
 				var target_direction = target.global_position.direction_to(global_position)
 				$AnimatedSprite.flip_h = target_direction.x < 0
 				
-				_state = STATE.ATTACKING
+				if $AttackTimer.is_stopped():
+					_state = STATE.ATTACKING
 			elif $AlertTimer.is_stopped():
 				_state = STATE.IDLE
 			
@@ -87,11 +87,8 @@ func manage_state():
 
 			pass
 		STATE.ATTACKING:
-			if $AttackTimer.is_stopped():
-				$AnimationPlayer.play("attack")
-				yield($AnimationPlayer, "animation_finished")
-				attack(target)
-				$AttackTimer.start(rand_range(0.5, 3.0))
+			current_animation = "attack"
+			$AttackTimer.start(rand_range(0.5, 3.0))
 			pass
 		STATE.HURT:
 			current_animation = "hurt"
@@ -110,22 +107,23 @@ func goto_alert():
 	_state = STATE.ALERTED
 
 
-#TODO: rewrite attack function
-func attack(target: Node):
+func attack():
 	var fireball = FireBall.instance()
 	var target_direction = target.global_position.direction_to(global_position)
 		
 	$AnimatedSprite.flip_h = target_direction.x < 0
 		
-	fireball.global_position = global_position
-	fireball.linear_velocity = Vector2(-target_direction.round().x * 300, 0)
+	fireball.global_position = global_position - Vector2(25, 0) * target_direction
+	fireball.linear_velocity.x = (-target_direction.x / target_direction.abs().x 
+	* target_direction.abs().ceil().x * 300)
 	fireball.set_as_toplevel(true)
-		
+
+	print(stepify(target_direction.x, 1))
 	call_deferred("add_child", fireball)
 	
 
 func _on_DetectionArea_body_entered(body):
-	if body is Player:
+	if body.is_in_group("player"):
 		emit_signal("detected_player")
 		target = body
 		_state = STATE.ALERTED
@@ -133,6 +131,8 @@ func _on_DetectionArea_body_entered(body):
 
 
 func _on_DetectionArea_body_exited(body):
-	if body is Player:
+	if body.is_in_group("player"):
 		target = null
+		_state = STATE.ALERTED
 		$AlertTimer.start()
+		
