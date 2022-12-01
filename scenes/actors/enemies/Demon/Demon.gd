@@ -20,6 +20,8 @@ enum STATE {
 var target
 var _state = STATE.IDLE
 const FireBall = preload("res://scenes/Objects/FireBall.tscn")
+onready var AlertTimer = $AlertTimer
+onready var AttackTimer = $AttackTimer
 
  
 func _init():
@@ -65,9 +67,9 @@ func manage_state():
 				var target_direction = target.global_position.direction_to(global_position)
 				$AnimatedSprite.flip_h = target_direction.x < 0
 				
-				if $AttackTimer.is_stopped():
+				if AttackTimer.is_stopped():
 					_state = STATE.ATTACKING
-			elif $AlertTimer.is_stopped():
+			elif AlertTimer.is_stopped():
 				_state = STATE.IDLE
 			
 			current_animation = "idle"
@@ -88,7 +90,7 @@ func manage_state():
 			pass
 		STATE.ATTACKING:
 			current_animation = "attack"
-			$AttackTimer.start(rand_range(0.5, 3.0))
+			AttackTimer.start(rand_range(0.5, 3.0))
 			pass
 		STATE.HURT:
 			current_animation = "hurt"
@@ -118,21 +120,19 @@ func attack():
 	* target_direction.abs().ceil().x * 300)
 	fireball.set_as_toplevel(true)
 
-	print(stepify(target_direction.x, 1))
 	call_deferred("add_child", fireball)
-	
+
 
 func _on_DetectionArea_body_entered(body):
 	if body.is_in_group("player"):
 		emit_signal("detected_player")
 		target = body
 		_state = STATE.ALERTED
-		$AlertTimer.stop()
+		AlertTimer.stop()
 
 
 func _on_DetectionArea_body_exited(body):
 	if body.is_in_group("player"):
 		target = null
 		_state = STATE.ALERTED
-		$AlertTimer.start()
-		
+		AlertTimer.start()

@@ -9,20 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "KinematicBody2D",
+"base": "Reference",
 "class": "Actor",
 "language": "GDScript",
-"path": "res://scenes/Actors/Actor.gd"
+"path": "res://scenes/actors/Actor.gd"
 }, {
-"base": "Actor",
+"base": "Reference",
 "class": "Enemy",
 "language": "GDScript",
-"path": "res://scenes/Actors/enemies/Enemy.gd"
+"path": "res://scenes/actors/enemies/Enemy.gd"
 }, {
-"base": "Actor",
+"base": "Reference",
 "class": "Player",
 "language": "GDScript",
-"path": "res://scenes/Actors/player/Player.gd"
+"path": "res://scenes/actors/player/Player.gd"
 } ]
 _global_script_class_icons={
 "Actor": "",
