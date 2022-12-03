@@ -121,8 +121,7 @@ func attack():
 
 func teleport():
 	if (teleport_target):
-		var error = rand_range(-100, 100)
-		global_position = teleport_target_pos + Vector2(error, 0)
+		global_position = teleport_target_pos
 		TeleportDelay.start()
 	_state = STATE.ALERTED
 
