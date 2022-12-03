@@ -77,7 +77,6 @@ func manage_state(delta):
 				velocity.y -= jump_force
 				_state = STATE.IN_AIR
 			current_animation = "idle_0"
-			pass
 		STATE.WALKING:
 			velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
 			current_animation = "run"
@@ -89,7 +88,6 @@ func manage_state(delta):
 				_state = STATE.IN_AIR
 			if velocity.length() < 1:
 				_state = STATE.IDLE
-			pass
 		STATE.IN_AIR:
 			velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
 			
@@ -102,7 +100,6 @@ func manage_state(delta):
 				current_animation = "fall"
 			else:
 				current_animation = "jump"
-			pass
 		STATE.ATTACKING:
 			velocity.x = 0
 			current_animation = "attack_0"

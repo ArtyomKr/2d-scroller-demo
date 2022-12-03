@@ -294,10 +294,22 @@ tracks/1/keys = {
 "update": 1,
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("AnimatedSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.00338578 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
 
 [sub_resource type="Animation" id=24]
 resource_name = "teleport"
-length = 1.2
+length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:position")
 tracks/0/interp = 1
@@ -317,7 +329,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"times": PoolRealArray( 0, 0.4, 0.8, 1.2, 1.6, 2 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ 0, 1, 2, 3, 4, 5 ]
@@ -341,11 +353,11 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 1.2 ),
+"times": PoolRealArray( 2 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "goto_alert"
+"method": "teleport"
 } ]
 }
 
@@ -399,11 +411,16 @@ anims/idle = SubResource( 23 )
 anims/teleport = SubResource( 24 )
 
 [node name="AlertTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 8.0
 one_shot = true
 
 [node name="AttackTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="TeleportDelay" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]
+[connection signal="timeout" from="AlertTimer" to="." method="_on_AlertTimer_timeout"]
