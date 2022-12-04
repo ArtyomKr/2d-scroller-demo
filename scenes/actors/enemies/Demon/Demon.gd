@@ -37,7 +37,6 @@ func _ready():
 
 func _physics_process(_delta):
 	manage_state()
-	print(AlertTimer.time_left)
 
 
 func start(pos: Vector2):

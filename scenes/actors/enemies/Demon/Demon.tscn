@@ -380,6 +380,7 @@ scale = Vector2( 1.5, 1.5 )
 shape = SubResource( 20 )
 
 [node name="HPBar" parent="." instance=ExtResource( 1 )]
+visible = false
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -25.0

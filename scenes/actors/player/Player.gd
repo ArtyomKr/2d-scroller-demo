@@ -66,17 +66,19 @@ func manage_state(delta):
 			pass
 		STATE.IDLE:
 			velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
+			current_animation = "idle_0"
 			
 			if is_on_floor() && abs(direction) > 0:
 				_state = STATE.WALKING
 			if Input.is_action_just_pressed("attack"):
 				_state = STATE.ATTACKING
+			if Input.get_action_strength("ui_down") > 0.3:
+				current_animation = "crouch"
 			if !is_on_floor():
 				_state = STATE.IN_AIR
 			if is_on_floor() && Input.is_action_just_pressed("jump"):
 				velocity.y -= jump_force
 				_state = STATE.IN_AIR
-			current_animation = "idle_0"
 		STATE.WALKING:
 			velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
 			current_animation = "run"
