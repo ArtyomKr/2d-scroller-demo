@@ -104,7 +104,8 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="CircleShape2D" id=20]
+[sub_resource type="RectangleShape2D" id=33]
+extents = Vector2( 11, 9.66667 )
 
 [sub_resource type="CircleShape2D" id=19]
 radius = 320.039
@@ -375,9 +376,9 @@ frames = SubResource( 17 )
 animation = "idle"
 
 [node name="PhysicsBox" type="CollisionShape2D" parent="."]
-position = Vector2( -1, 36 )
+position = Vector2( -0.5, 35.5 )
 scale = Vector2( 1.5, 1.5 )
-shape = SubResource( 20 )
+shape = SubResource( 33 )
 
 [node name="HPBar" parent="." instance=ExtResource( 1 )]
 visible = false

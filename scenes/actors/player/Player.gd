@@ -114,9 +114,6 @@ func manage_state(delta):
 			yield($AnimationPlayer, "animation_finished")
 			hide()
 			emit_signal('player_died')
-	
-	position.x = clamp(position.x, 0, screen_size.x)
-	position.y = clamp(position.y, 0, screen_size.y)
 				
 	if abs(velocity.x) > 0.1:
 		$Sprite.flip_h = velocity.x < 0

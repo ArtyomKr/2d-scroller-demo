@@ -3,8 +3,9 @@
 [ext_resource path="res://scenes/Actors/player/Player.gd" type="Script" id=27]
 [ext_resource path="res://art/animations/adventurer/adventurer-Sheet.png" type="Texture" id=38]
 
-[sub_resource type="CircleShape2D" id=19]
-radius = 6.33333
+[sub_resource type="RectangleShape2D" id=19]
+custom_solver_bias = 1.0
+extents = Vector2( 5.66667, 4.33333 )
 
 [sub_resource type="Animation" id=6]
 length = 0.001
@@ -818,8 +819,9 @@ __meta__ = {
 }
 
 [node name="PhysicsBox" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 11.6667 )
+position = Vector2( 0.666667, 13.3333 )
 shape = SubResource( 19 )
+one_way_collision = true
 
 [node name="PlayerAttackArea" type="Area2D" parent="."]
 collision_layer = 2
