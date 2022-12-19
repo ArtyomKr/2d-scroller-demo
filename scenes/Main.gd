@@ -12,7 +12,7 @@ func _ready():
 	$CanvasLayer/PlayerHPBar.value = $Player.hp
 	$Player.start($Player.position)
 	$Demon.start($Demon.position)
-
+	$HellHound.start($HellHound.position)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
