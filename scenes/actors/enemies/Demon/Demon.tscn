@@ -6,6 +6,26 @@
 [ext_resource path="res://art/animations/gothicvania patreon collection/Hell-Beast-Files/PNG/without-stroke/hell-beast-burn.png" type="Texture" id=4]
 [ext_resource path="res://scenes/actors/enemies/Demon/Demon.gd" type="Script" id=5]
 
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 64, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 128, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 192, 0, 64, 64 )
+
 [sub_resource type="AtlasTexture" id=26]
 flags = 4
 atlas = ExtResource( 2 )
@@ -35,26 +55,6 @@ region = Rect2( 220, 0, 55, 67 )
 flags = 4
 atlas = ExtResource( 2 )
 region = Rect2( 275, 0, 55, 67 )
-
-[sub_resource type="AtlasTexture" id=7]
-flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=8]
-flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 64, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=9]
-flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 128, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=10]
-flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 192, 0, 64, 64 )
 
 [sub_resource type="AtlasTexture" id=11]
 flags = 4
@@ -88,14 +88,14 @@ region = Rect2( 370, 0, 74, 160 )
 
 [sub_resource type="SpriteFrames" id=17]
 animations = [ {
-"frames": [ SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ) ],
-"loop": true,
-"name": "idle",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
 "loop": true,
 "name": "attack",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ) ],
+"loop": true,
+"name": "idle",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
@@ -223,7 +223,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id=25]
 resource_name = "die"
-length = 0.5
+length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:modulate")
 tracks/0/interp = 1
@@ -231,7 +231,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.3, 0.5 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
