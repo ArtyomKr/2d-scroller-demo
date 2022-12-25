@@ -107,12 +107,11 @@ func goto_alert():
 func attack():
 	var fireball = FireBall.instance()
 	var target_dir = attack_target.global_position.direction_to(global_position)
-		
+	
 	$AnimatedSprite.flip_h = target_dir.x < 0
-		
+	
 	fireball.global_position = global_position - Vector2(25, 0) * target_dir
-	fireball.linear_velocity.x = (-target_dir.x / target_dir.abs().x 
-	* target_dir.abs().ceil().x * 300)
+	fireball.linear_velocity.x = -target_dir.x / target_dir.abs().x * 300
 	fireball.set_as_toplevel(true)
 
 	call_deferred("add_child", fireball)
