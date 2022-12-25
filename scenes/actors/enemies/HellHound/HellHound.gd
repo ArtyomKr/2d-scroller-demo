@@ -4,19 +4,23 @@ extends Enemy
 signal detected_player
 
 
-export var speed = 300
+export var walk_speed = 100
+export var run_speed = 200
 export var jump_force = 500
 
 enum STATE {
 	IN_AIR,
 	IDLE,
+	IDLE_WALK,
 	ALERTED,
+	ALERTED_CHASE,
 	DEAD,
 	ATTACKING,
 	HURT
 }
 
 var attack_target
+var direction = 1
 var _state = STATE.IDLE
 onready var AlertTimer = $AlertTimer
 onready var AttackTimer = $AttackTimer
@@ -30,8 +34,8 @@ func _ready():
 	hide()
 
 
-func _physics_process(_delta):
-	manage_state()
+func _physics_process(delta):
+	manage_state(delta)
 
 
 func start(pos: Vector2):
@@ -49,7 +53,7 @@ func damage(amount):
 	.damage(amount)
 
 
-func manage_state():
+func manage_state(delta):
 	var current_animation: String
 	
 	match _state:
@@ -57,33 +61,48 @@ func manage_state():
 			velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
 			
 			current_animation = "idle"
-		STATE.ALERTED:
+		STATE.IDLE_WALK:
+			velocity.x = direction * walk_speed * delta * 100
 			velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
 			
+			current_animation = "idle_walk"
+		STATE.ALERTED:
+			current_animation = "alerted_walk"
+			
 			if attack_target:
-				var target_direction = attack_target.global_position.direction_to(global_position)
-				$AnimatedSprite.flip_h = target_direction.x < 0
+				var target_dir = attack_target.global_position.direction_to(global_position)
+				target_dir.x = -target_dir.x / target_dir.abs().x
+				direction = target_dir.x
 				
 				if AttackTimer.is_stopped():
 					_state = STATE.ATTACKING
+				if !AttackTimer.is_stopped():
+					velocity.x = run_speed * delta * 100
+					current_animation = "run"
+				if AlertTimer.is_stopped() && !attack_target:
+					_state = STATE.IDLE
 			
-			current_animation = "idle"
+			velocity.x = direction * walk_speed * delta * 100
+			velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
 		STATE.IN_AIR:
 			velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
 			
 			if is_on_floor(): 
 				_state = STATE.IDLE
 		STATE.ATTACKING:
-			print_debug("attack")
 			current_animation = "attack"
 			AttackTimer.start(rand_range(0.5, 2.0))
+			velocity.x = direction * run_speed * delta * 100
+			velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
 		STATE.HURT:
 			current_animation = "hurt"
 		STATE.DEAD:
 			$AnimationPlayer.play("die")
 			yield($AnimationPlayer, "animation_finished")
 			destroy()
-	
+			
+	if abs(velocity.x) > 0.1:
+		$AnimatedSprite.flip_h = velocity.x > 0
 	if current_animation != $AnimationPlayer.assigned_animation:	
 		$AnimationPlayer.play(current_animation)
 
@@ -92,9 +111,13 @@ func goto_alert():
 	_state = STATE.ALERTED
 
 
+func goto_idle_walk():
+	_state = STATE.IDLE_WALK
+	direction = pow(-1, randi() % 2)
+
+
 func attack():
 	var target_dir = attack_target.global_position.direction_to(global_position)
-		
 	$AnimatedSprite.flip_h = target_dir.x < 0
 
 
