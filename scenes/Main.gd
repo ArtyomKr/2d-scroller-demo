@@ -8,8 +8,11 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Player.start(Vector2(0, 900))
-
+	$CanvasLayer/PlayerHPBar.max_value = $Player.hp
+	$CanvasLayer/PlayerHPBar.value = $Player.hp
+	$Player.start($Player.position)
+	$Demon.start($Demon.position)
+	$HellHound.start($HellHound.position)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
